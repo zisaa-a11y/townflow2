@@ -1,0 +1,10 @@
+class ApiMessage:
+    SUCCESS = "Request processed successfully."
+    CREATED = "Resource created successfully."
+    UPDATED = "Resource updated successfully."
+    DELETED = "Resource deleted successfully."
+    VALIDATION_ERROR = "Validation failed."
+    UNAUTHORIZED = "Authentication credentials were not provided or invalid."
+    FORBIDDEN = "You do not have permission to perform this action."
+    NOT_FOUND = "Requested resource was not found."
+    SERVER_ERROR = "An unexpected server error occurred."

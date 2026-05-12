@@ -12,6 +12,12 @@ services:
     ports:
       - "${MYSQL_EXTERNAL_PORT}:3306"
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -31,7 +37,7 @@ services:
     environment:
       TESSDATA_PREFIX: /usr/share/tesseract-ocr/5/tessdata
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "python manage.py migrate --run-syncdb &&
       python manage.py collectstatic --noinput &&
       gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers ${GUNICORN_WORKERS} --threads ${GUNICORN_THREADS} --timeout ${GUNICORN_TIMEOUT}"
     volumes:
@@ -41,8 +47,10 @@ services:
     ports:
       - "${DJANGO_EXTERNAL_PORT}:8000"
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
 
 volumes:
   mysql_data:

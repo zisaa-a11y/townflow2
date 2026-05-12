@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from apps.authentication.serializers import (
+    ForgotPasswordSerializer,
     LoginSerializer,
     LogoutSerializer,
     RequestOtpSerializer,
@@ -13,6 +14,7 @@ from apps.authentication.serializers import (
     VerifyOtpSerializer,
 )
 from apps.authentication.services import blacklist_refresh_token, issue_otp_session, verify_otp_session
+from apps.authentication.models import User
 from common.constants.messages import ApiMessage
 
 
@@ -70,14 +72,71 @@ class RequestOtpView(APIView):
         return Response({"success": True, "message": ApiMessage.SUCCESS, "data": data}, status=status.HTTP_200_OK)
 
 
+class ForgotPasswordView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = ForgotPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.validated_data["email"]
+        channel = serializer.validated_data["channel"]
+        user = User.objects.filter(email=email, is_active=True).first()
+
+        if not user:
+            return Response(
+                {
+                    "success": True,
+                    "message": ApiMessage.SUCCESS,
+                    "data": {"detail": "If the account exists, an OTP has been sent."},
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        otp_session = issue_otp_session(user, channel)
+        data = {"session_id": str(otp_session.id), "channel": channel}
+        if settings.DEBUG:
+            data["debug_otp"] = getattr(otp_session, "_plain_code", None)
+
+        return Response({"success": True, "message": ApiMessage.SUCCESS, "data": data}, status=status.HTTP_200_OK)
+
+
+class ResendOtpView(ForgotPasswordView):
+    pass
+
+
 class VerifyOtpView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         serializer = VerifyOtpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
+        user = request.user if request.user.is_authenticated else None
+        if user is None:
+            email = serializer.validated_data.get("email")
+            if not email:
+                return Response(
+                    {
+                        "success": False,
+                        "message": ApiMessage.VALIDATION_ERROR,
+                        "errors": {"email": ["Email is required when not authenticated."]},
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            user = User.objects.filter(email=email, is_active=True).first()
+            if not user:
+                return Response(
+                    {
+                        "success": False,
+                        "message": ApiMessage.VALIDATION_ERROR,
+                        "errors": {"email": ["No active user found for this email."]},
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
         is_valid = verify_otp_session(
-            request.user,
+            user,
             serializer.validated_data["channel"],
             serializer.validated_data["code"],
         )

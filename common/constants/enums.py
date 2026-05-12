@@ -36,6 +36,24 @@ class AlertType:
     )
 
 
+class FileCategory:
+    DOCUMENT = "document"
+    IMAGE = "image"
+    VIDEO = "video"
+    AUDIO = "audio"
+    ARCHIVE = "archive"
+    OTHER = "other"
+
+    CHOICES = (
+        (DOCUMENT, "Document"),
+        (IMAGE, "Image"),
+        (VIDEO, "Video"),
+        (AUDIO, "Audio"),
+        (ARCHIVE, "Archive"),
+        (OTHER, "Other"),
+    )
+
+
 class FeedCategory:
     NEWS = "news"
     ALERT = "alert"

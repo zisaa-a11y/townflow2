@@ -16,7 +16,30 @@ class DonorProfileViewSet(viewsets.ModelViewSet):
     filterset_fields = ["blood_group", "is_available"]
 
     def get_queryset(self):
-        return DonorProfile.objects.select_related("user", "blood_group")
+        queryset = DonorProfile.objects.select_related("user", "blood_group")
+        lat = self.request.query_params.get("lat")
+        lon = self.request.query_params.get("lon")
+        radius_km = self.request.query_params.get("radius")
+        if lat is None or lon is None or radius_km is None:
+            return queryset
+
+        try:
+            lat = float(lat)
+            lon = float(lon)
+            radius = max(float(radius_km), 0.1)
+        except (TypeError, ValueError):
+            return queryset.none()
+
+        lat_delta = radius / 111.0
+        lon_delta = radius / (111.0 * max(0.1, abs(lat)))
+        return queryset.filter(
+            latitude__isnull=False,
+            longitude__isnull=False,
+            latitude__gte=lat - lat_delta,
+            latitude__lte=lat + lat_delta,
+            longitude__gte=lon - lon_delta,
+            longitude__lte=lon + lon_delta,
+        )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

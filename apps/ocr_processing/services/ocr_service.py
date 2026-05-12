@@ -47,6 +47,9 @@ class OCRService:
         except RuntimeError as exc:
             logger.warning("OCR timeout reached", exc_info=exc)
             raise OCRServiceError("OCR processing timed out. Please retry with a clearer image.") from exc
+        except pytesseract.TesseractNotFoundError as exc:
+            logger.exception("Tesseract is not installed or not found on this server")
+            raise OCRServiceError("OCR service is not available on this server.") from exc
         except pytesseract.TesseractError as exc:
             logger.exception("Tesseract OCR failure")
             raise OCRServiceError("OCR engine failed to process the image.") from exc

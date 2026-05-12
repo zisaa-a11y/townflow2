@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "apps.community_feed",
     "apps.digital_library",
     "apps.events_calendar",
+    "apps.file_manager",
     "apps.home",
     "apps.local_jobs",
     "apps.local_services",
@@ -99,18 +100,31 @@ if mysql_ssl_ca or mysql_ssl_cert or mysql_ssl_key:
     if mysql_ssl_key:
         mysql_options["ssl"]["key"] = mysql_ssl_key
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": env("MYSQL_DATABASE"),
-        "USER": env("MYSQL_USER"),
-        "PASSWORD": env("MYSQL_PASSWORD"),
-        "HOST": env("MYSQL_HOST"),
-        "PORT": env("MYSQL_PORT"),
-        "CONN_MAX_AGE": env.int("MYSQL_CONN_MAX_AGE", default=60),
-        "OPTIONS": mysql_options,
+database_engine = env(
+    "DATABASE_ENGINE",
+    default="django.db.backends.mysql" if env("MYSQL_HOST", default="") == "db" else "django.db.backends.sqlite3",
+)
+
+if database_engine == "django.db.backends.sqlite3":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": env("DATABASE_NAME", default=str(BASE_DIR / "db.sqlite3")),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": database_engine,
+            "NAME": env("MYSQL_DATABASE", default="townflow"),
+            "USER": env("MYSQL_USER", default="townflow_user"),
+            "PASSWORD": env("MYSQL_PASSWORD", default=""),
+            "HOST": env("MYSQL_HOST", default="localhost"),
+            "PORT": env("MYSQL_PORT", default="3306"),
+            "CONN_MAX_AGE": env.int("MYSQL_CONN_MAX_AGE", default=60),
+            "OPTIONS": mysql_options,
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -175,12 +189,23 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": env("REDIS_URL", default="redis://redis:6379/1"),
+# Cache configuration - use Redis if available, otherwise use database cache
+CACHE_BACKEND = env("CACHE_BACKEND", default="redis")
+if CACHE_BACKEND == "redis":
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": env("REDIS_URL", default="redis://127.0.0.1:6379/1"),
+        }
     }
-}
+else:
+    # Fallback to database cache for Namecheap shared hosting
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache_table",
+        }
+    }
 
 SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
@@ -191,10 +216,15 @@ SECURE_REFERRER_POLICY = env("SECURE_REFERRER_POLICY", default="same-origin")
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = env.bool("USE_X_FORWARDED_HOST", default=False)
 
+# Production security settings
 if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    USE_X_FORWARDED_HOST = True
     SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=31536000)
     SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
-    SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
+    SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
 
 LOGGING = {
     "version": 1,
@@ -222,7 +252,17 @@ LOGGING = {
             "handlers": ["console"],
             "level": env("LOG_LEVEL", default="INFO"),
             "propagate": False,
-        }
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
     },
 }
 

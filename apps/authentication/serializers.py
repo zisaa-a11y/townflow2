@@ -51,7 +51,13 @@ class RequestOtpSerializer(serializers.Serializer):
     channel = serializers.ChoiceField(choices=OtpChannel.CHOICES)
 
 
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    channel = serializers.ChoiceField(choices=OtpChannel.CHOICES, default=OtpChannel.EMAIL)
+
+
 class VerifyOtpSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=False)
     channel = serializers.ChoiceField(choices=OtpChannel.CHOICES)
     code = serializers.CharField(min_length=4, max_length=10)
 

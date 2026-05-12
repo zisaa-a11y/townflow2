@@ -22,6 +22,30 @@ class IssueReportViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = IssueReport.objects.select_related("reporter").prefetch_related("status_logs")
+        lat = self.request.query_params.get("lat")
+        lon = self.request.query_params.get("lon")
+        radius_km = self.request.query_params.get("radius", "10")
+
+        if lat is not None and lon is not None:
+            try:
+                lat = float(lat)
+                lon = float(lon)
+                radius = max(float(radius_km), 0.1)
+            except (TypeError, ValueError):
+                return queryset.none()
+
+            lat_delta = radius / 111.0
+            lon_delta = radius / (111.0 * max(0.1, abs(lat)))
+            queryset = queryset.filter(
+                latitude__isnull=False,
+                longitude__isnull=False,
+                latitude__gte=lat - lat_delta,
+                latitude__lte=lat + lat_delta,
+                longitude__gte=lon - lon_delta,
+                longitude__lte=lon + lon_delta,
+            )
+            return queryset
+
         if self.request.user.role in {UserRole.ADMIN, UserRole.MODERATOR}:
             return queryset
         return queryset.filter(reporter=self.request.user)
@@ -52,3 +76,15 @@ class IssueReportViewSet(viewsets.ModelViewSet):
             note=note,
         )
         return Response(self.get_serializer(report).data)
+
+    @action(detail=False, methods=["get"], url_path="my-reports")
+    def my_reports(self, request):
+        queryset = IssueReport.objects.select_related("reporter").prefetch_related("status_logs").filter(
+            reporter=request.user
+        )
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

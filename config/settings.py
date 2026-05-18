@@ -102,7 +102,7 @@ if mysql_ssl_ca or mysql_ssl_cert or mysql_ssl_key:
 
 database_engine = env(
     "DATABASE_ENGINE",
-    default="django.db.backends.mysql" if env("MYSQL_HOST", default="") == "db" else "django.db.backends.sqlite3",
+    default="django.db.backends.sqlite3",
 )
 
 if database_engine == "django.db.backends.sqlite3":
@@ -189,8 +189,8 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-# Cache configuration - use Redis if available, otherwise use database cache
-CACHE_BACKEND = env("CACHE_BACKEND", default="redis")
+# Cache configuration - default to local database cache for non-containerized development.
+CACHE_BACKEND = env("CACHE_BACKEND", default="db")
 if CACHE_BACKEND == "redis":
     CACHES = {
         "default": {

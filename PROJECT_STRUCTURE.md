@@ -46,8 +46,6 @@ Backend/
 ├── .env
 ├── .env.example
 ├── .gitignore
-├── Dockerfile
-├── docker-compose.yml
 ├── requirements.txt
 ├── README.md
 ├── API_DOCUMENTATION.md

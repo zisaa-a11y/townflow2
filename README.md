@@ -1,13 +1,12 @@
 # TownFlow Backend
 
-Production-ready backend for the TownFlow Flutter application, built with Django, Django REST Framework, MySQL, JWT authentication, Docker, and modular feature apps.
+Production-ready backend for the TownFlow Flutter application, built with Django, Django REST Framework, MySQL, JWT authentication, and modular feature apps.
 
 ## Tech Stack
 - Django 5
 - Django REST Framework
 - MySQL 8
 - JWT auth (`djangorestframework-simplejwt` + blacklist)
-- Docker + Docker Compose
 - OpenAPI/Swagger (`drf-spectacular`)
 - Redis (cache-ready)
 
@@ -62,16 +61,6 @@ See `.env.example` for full list. High-impact variables:
 - splash
 - startup
 - volunteer_hub
-
-## Quick Start (Docker)
-```bash
-docker compose up --build
-```
-
-Then run in another terminal:
-```bash
-docker compose exec web python manage.py createsuperuser
-```
 
 ## Local Run (without Docker)
 1. Create and activate Python environment
@@ -144,7 +133,6 @@ curl -X POST http://localhost:8000/api/v1/community-feed/posts/ \
 - [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
 - [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
 - [SETUP_GUIDE.md](SETUP_GUIDE.md)
-- [docs/deploy/namecheap_live_deploy.md](docs/deploy/namecheap_live_deploy.md)
 
 ## Production Notes
 - Replace all `.env` secret values before deployment
@@ -152,4 +140,4 @@ curl -X POST http://localhost:8000/api/v1/community-feed/posts/ \
 - Enable SSL-related secure cookie settings in production
 - Add external object storage (S3-compatible) via custom storage backend
 - Add CI/CD pipeline for tests, linting, and deployment
-- For Namecheap VPS live setup, use `docker-compose.prod.yml` with `.env.production.example`
+- For Namecheap/shared-hosting setup, use `.env.production.example` and the Namecheap deployment docs

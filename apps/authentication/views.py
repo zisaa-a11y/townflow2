@@ -2,6 +2,7 @@ from django.conf import settings
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from drf_spectacular.utils import OpenApiResponse, extend_schema
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from apps.authentication.serializers import (
@@ -25,7 +26,14 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = LoginSerializer
 
+    @extend_schema(
+        request=LoginSerializer,
+        responses={
+            200: OpenApiResponse(description="Login successful. Returns access and refresh tokens."),
+        },
+    )
     def post(self, request):
         serializer = LoginSerializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
@@ -47,7 +55,12 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = LogoutSerializer
 
+    @extend_schema(
+        request=LogoutSerializer,
+        responses={200: OpenApiResponse(description="Logout successful.")},
+    )
     def post(self, request):
         serializer = LogoutSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -57,7 +70,12 @@ class LogoutView(APIView):
 
 class RequestOtpView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = RequestOtpSerializer
 
+    @extend_schema(
+        request=RequestOtpSerializer,
+        responses={200: OpenApiResponse(description="OTP session created.")},
+    )
     def post(self, request):
         serializer = RequestOtpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -74,7 +92,12 @@ class RequestOtpView(APIView):
 
 class ForgotPasswordView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = ForgotPasswordSerializer
 
+    @extend_schema(
+        request=ForgotPasswordSerializer,
+        responses={200: OpenApiResponse(description="OTP issued if account exists.")},
+    )
     def post(self, request):
         serializer = ForgotPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -107,7 +130,12 @@ class ResendOtpView(ForgotPasswordView):
 
 class VerifyOtpView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = VerifyOtpSerializer
 
+    @extend_schema(
+        request=VerifyOtpSerializer,
+        responses={200: OpenApiResponse(description="OTP verification response.")},
+    )
     def post(self, request):
         serializer = VerifyOtpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

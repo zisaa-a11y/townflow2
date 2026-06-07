@@ -1,9 +1,19 @@
+from django.shortcuts import render
+from django.urls import reverse
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.volunteer_hub.models import VolunteerEnrollment, VolunteerProject
 from apps.volunteer_hub.serializers import VolunteerEnrollmentSerializer, VolunteerProjectSerializer
+
+
+def form_generator_page(request):
+    return render(
+        request,
+        "volunteer_hub/form_generator.html",
+        {"schema_url": reverse("schema")},
+    )
 
 
 class VolunteerProjectViewSet(viewsets.ModelViewSet):

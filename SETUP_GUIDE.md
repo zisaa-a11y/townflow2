@@ -55,9 +55,9 @@ CSRF_TRUSTED_ORIGINS=https://yourdomain.com,http://localhost:3000
 # Database
 MYSQL_HOST=localhost
 MYSQL_PORT=3306
-MYSQL_DATABASE=townflow_db
-MYSQL_USER=townflow_user
-MYSQL_PASSWORD=secure_password_here
+MYSQL_DATABASE=townetrl_townflow2
+MYSQL_USER=townetrl_townflow2user
+MYSQL_PASSWORD=FHQHG4A3YPHat7y
 MYSQL_ROOT_PASSWORD=root_password_here
 
 # Redis
@@ -187,9 +187,9 @@ brew services start mysql  # macOS
 
 # Create database
 mysql -u root -p
-CREATE DATABASE townflow_db CHARACTER SET utf8mb4;
-CREATE USER 'townflow_user'@'localhost' IDENTIFIED BY 'secure_password';
-GRANT ALL PRIVILEGES ON townflow_db.* TO 'townflow_user'@'localhost';
+CREATE DATABASE townetrl_townflow2 CHARACTER SET utf8mb4;
+CREATE USER 'townetrl_townflow2user'@'localhost' IDENTIFIED BY 'FHQHG4A3YPHat7y';
+GRANT ALL PRIVILEGES ON townetrl_townflow2.* TO 'townetrl_townflow2user'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
@@ -198,9 +198,9 @@ FLUSH PRIVILEGES;
 docker run -d \
   --name townflow-mysql \
   -e MYSQL_ROOT_PASSWORD=root_password \
-  -e MYSQL_DATABASE=townflow_db \
-  -e MYSQL_USER=townflow_user \
-  -e MYSQL_PASSWORD=secure_password \
+  -e MYSQL_DATABASE=townetrl_townflow2 \
+  -e MYSQL_USER=townetrl_townflow2user \
+  -e MYSQL_PASSWORD=FHQHG4A3YPHat7y \
   -p 3306:3306 \
   mysql:8.0
 ```
@@ -388,7 +388,7 @@ python manage.py runserver 8001
 service mysql status
 
 # Check connection
-mysql -h localhost -u townflow_user -p
+mysql -h localhost -u townetrl_townflow2user -p
 
 # Check environment variables
 echo $MYSQL_HOST
@@ -474,7 +474,7 @@ docker run -d \
 0 2 * * * mysqldump -u user -p password db > /backups/db-$(date +\%Y\%m\%d).sql
 
 # Recent backup before deployment
-mysqldump -u user -p password townflow_db > backup-$(date +%Y%m%d-%H%M%S).sql
+mysqldump -u townetrl_townflow2user -p townetrl_townflow2 > backup-$(date +%Y%m%d-%H%M%S).sql
 ```
 
 ### Performance Optimization

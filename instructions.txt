@@ -1,1 +1,0 @@
-source /home/riveygjm/virtualenv/townflow.riverviewpabna.com/3.11/bin/activate

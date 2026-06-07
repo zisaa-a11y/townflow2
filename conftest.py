@@ -26,7 +26,7 @@ def pytest_configure(config):
     )
 
 
-# Create test database using SQLite for faster tests
+# Configure test database settings when needed
 def pytest_db_configure(config):
     """Configure test database."""
     # This can be overridden in pytest.ini or environment variables

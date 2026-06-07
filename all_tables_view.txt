@@ -1,0 +1,368 @@
+DATABASE: townetrl_townflow2
+
+==============================
+TABLE: auth_group
+==============================
+
+
+==============================
+TABLE: auth_group_permissions
+==============================
+
+
+==============================
+TABLE: auth_permission
+==============================
++-----+----------------------------------+-----------------+----------------------------+
+| id  | name                             | content_type_id | codename                   |
++-----+----------------------------------+-----------------+----------------------------+
+|   1 | Can add permission               |               1 | add_permission             |
+|   2 | Can change permission            |               1 | change_permission          |
+|   3 | Can delete permission            |               1 | delete_permission          |
+|   4 | Can view permission              |               1 | view_permission            |
+|   5 | Can add group                    |               2 | add_group                  |
+|   6 | Can change group                 |               2 | change_group               |
+|   7 | Can delete group                 |               2 | delete_group               |
+|   8 | Can view group                   |               2 | view_group                 |
+|   9 | Can add content type             |               3 | add_contenttype            |
+|  10 | Can change content type          |               3 | change_contenttype         |
+|  11 | Can delete content type          |               3 | delete_contenttype         |
+|  12 | Can view content type            |               3 | view_contenttype           |
+|  13 | Can add user                     |               4 | add_user                   |
+|  14 | Can change user                  |               4 | change_user                |
+|  15 | Can delete user                  |               4 | delete_user                |
+|  16 | Can view user                    |               4 | view_user                  |
+|  17 | Can add otp session              |               5 | add_otpsession             |
+|  18 | Can change otp session           |               5 | change_otpsession          |
+|  19 | Can delete otp session           |               5 | delete_otpsession          |
+|  20 | Can view otp session             |               5 | view_otpsession            |
+|  21 | Can add alert                    |               6 | add_alert                  |
+|  22 | Can change alert                 |               6 | change_alert               |
+|  23 | Can delete alert                 |               6 | delete_alert               |
+|  24 | Can view alert                   |               6 | view_alert                 |
+|  25 | Can add blood group              |               7 | add_bloodgroup             |
+|  26 | Can change blood group           |               7 | change_bloodgroup          |
+|  27 | Can delete blood group           |               7 | delete_bloodgroup          |
+|  28 | Can view blood group             |               7 | view_bloodgroup            |
+|  29 | Can add donor profile            |               8 | add_donorprofile           |
+|  30 | Can change donor profile         |               8 | change_donorprofile        |
+|  31 | Can delete donor profile         |               8 | delete_donorprofile        |
+|  32 | Can view donor profile           |               8 | view_donorprofile          |
+|  33 | Can add blood request            |               9 | add_bloodrequest           |
+|  34 | Can change blood request         |               9 | change_bloodrequest        |
+|  35 | Can delete blood request         |               9 | delete_bloodrequest        |
+|  36 | Can view blood request           |               9 | view_bloodrequest          |
+|  37 | Can add blood request match      |              10 | add_bloodrequestmatch      |
+|  38 | Can change blood request match   |              10 | change_bloodrequestmatch   |
+|  39 | Can delete blood request match   |              10 | delete_bloodrequestmatch   |
+|  40 | Can view blood request match     |              10 | view_bloodrequestmatch     |
+|  41 | Can add post                     |              11 | add_post                   |
+|  42 | Can change post                  |              11 | change_post                |
+|  43 | Can delete post                  |              11 | delete_post                |
+|  44 | Can view post                    |              11 | view_post                  |
+|  45 | Can add post like                |              12 | add_postlike               |
+|  46 | Can change post like             |              12 | change_postlike            |
+|  47 | Can delete post like             |              12 | delete_postlike            |
+|  48 | Can view post like               |              12 | view_postlike              |
+|  49 | Can add post comment             |              13 | add_postcomment            |
+|  50 | Can change post comment          |              13 | change_postcomment         |
+|  51 | Can delete post comment          |              13 | delete_postcomment         |
+|  52 | Can view post comment            |              13 | view_postcomment           |
+|  53 | Can add library resource         |              14 | add_libraryresource        |
+|  54 | Can change library resource      |              14 | change_libraryresource     |
+|  55 | Can delete library resource      |              14 | delete_libraryresource     |
+|  56 | Can view library resource        |              14 | view_libraryresource       |
+|  57 | Can add resource progress        |              15 | add_resourceprogress       |
+|  58 | Can change resource progress     |              15 | change_resourceprogress    |
+|  59 | Can delete resource progress     |              15 | delete_resourceprogress    |
+|  60 | Can view resource progress       |              15 | view_resourceprogress      |
+|  61 | Can add event                    |              16 | add_event                  |
+|  62 | Can change event                 |              16 | change_event               |
+|  63 | Can delete event                 |              16 | delete_event               |
+|  64 | Can view event                   |              16 | view_event                 |
+|  65 | Can add event rsvp               |              17 | add_eventrsvp              |
+|  66 | Can change event rsvp            |              17 | change_eventrsvp           |
+|  67 | Can delete event rsvp            |              17 | delete_eventrsvp           |
+|  68 | Can view event rsvp              |              17 | view_eventrsvp             |
+|  69 | Can add home banner              |              18 | add_homebanner             |
+|  70 | Can change home banner           |              18 | change_homebanner          |
+|  71 | Can delete home banner           |              18 | delete_homebanner          |
+|  72 | Can view home banner             |              18 | view_homebanner            |
+|  73 | Can add quick action             |              19 | add_quickaction            |
+|  74 | Can change quick action          |              19 | change_quickaction         |
+|  75 | Can delete quick action          |              19 | delete_quickaction         |
+|  76 | Can view quick action            |              19 | view_quickaction           |
+|  77 | Can add job                      |              20 | add_job                    |
+|  78 | Can change job                   |              20 | change_job                 |
+|  79 | Can delete job                   |              20 | delete_job                 |
+|  80 | Can view job                     |              20 | view_job                   |
+|  81 | Can add job application          |              21 | add_jobapplication         |
+|  82 | Can change job application       |              21 | change_jobapplication      |
+|  83 | Can delete job application       |              21 | delete_jobapplication      |
+|  84 | Can view job application         |              21 | view_jobapplication        |
+|  85 | Can add service category         |              22 | add_servicecategory        |
+|  86 | Can change service category      |              22 | change_servicecategory     |
+|  87 | Can delete service category      |              22 | delete_servicecategory     |
+|  88 | Can view service category        |              22 | view_servicecategory       |
+|  89 | Can add service provider         |              23 | add_serviceprovider        |
+|  90 | Can change service provider      |              23 | change_serviceprovider     |
+|  91 | Can delete service provider      |              23 | delete_serviceprovider     |
+|  92 | Can view service provider        |              23 | view_serviceprovider       |
+|  93 | Can add service booking          |              24 | add_servicebooking         |
+|  94 | Can change service booking       |              24 | change_servicebooking      |
+|  95 | Can delete service booking       |              24 | delete_servicebooking      |
+|  96 | Can view service booking         |              24 | view_servicebooking        |
+|  97 | Can add onboarding progress      |              25 | add_onboardingprogress     |
+|  98 | Can change onboarding progress   |              25 | change_onboardingprogress  |
+|  99 | Can delete onboarding progress   |              25 | delete_onboardingprogress  |
+| 100 | Can view onboarding progress     |              25 | view_onboardingprogress    |
+| 101 | Can add user profile             |              26 | add_userprofile            |
+| 102 | Can change user profile          |              26 | change_userprofile         |
+| 103 | Can delete user profile          |              26 | delete_userprofile         |
+| 104 | Can view user profile            |              26 | view_userprofile           |
+| 105 | Can add device token             |              27 | add_devicetoken            |
+| 106 | Can change device token          |              27 | change_devicetoken         |
+| 107 | Can delete device token          |              27 | delete_devicetoken         |
+| 108 | Can view device token            |              27 | view_devicetoken           |
+| 109 | Can add issue report             |              28 | add_issuereport            |
+| 110 | Can change issue report          |              28 | change_issuereport         |
+| 111 | Can delete issue report          |              28 | delete_issuereport         |
+| 112 | Can view issue report            |              28 | view_issuereport           |
+| 113 | Can add issue status log         |              29 | add_issuestatuslog         |
+| 114 | Can change issue status log      |              29 | change_issuestatuslog      |
+| 115 | Can delete issue status log      |              29 | delete_issuestatuslog      |
+| 116 | Can view issue status log        |              29 | view_issuestatuslog        |
+| 117 | Can add shell preference         |              30 | add_shellpreference        |
+| 118 | Can change shell preference      |              30 | change_shellpreference     |
+| 119 | Can delete shell preference      |              30 | delete_shellpreference     |
+| 120 | Can view shell preference        |              30 | view_shellpreference       |
+| 121 | Can add app release              |              31 | add_apprelease             |
+| 122 | Can change app release           |              31 | change_apprelease          |
+| 123 | Can delete app release           |              31 | delete_apprelease          |
+| 124 | Can view app release             |              31 | view_apprelease            |
+| 125 | Can add startup profile          |              32 | add_startupprofile         |
+| 126 | Can change startup profile       |              32 | change_startupprofile      |
+| 127 | Can delete startup profile       |              32 | delete_startupprofile      |
+| 128 | Can view startup profile         |              32 | view_startupprofile        |
+| 129 | Can add volunteer project        |              33 | add_volunteerproject       |
+| 130 | Can change volunteer project     |              33 | change_volunteerproject    |
+| 131 | Can delete volunteer project     |              33 | delete_volunteerproject    |
+| 132 | Can view volunteer project       |              33 | view_volunteerproject      |
+| 133 | Can add volunteer enrollment     |              34 | add_volunteerenrollment    |
+| 134 | Can change volunteer enrollment  |              34 | change_volunteerenrollment |
+| 135 | Can delete volunteer enrollment  |              34 | delete_volunteerenrollment |
+| 136 | Can view volunteer enrollment    |              34 | view_volunteerenrollment   |
+| 137 | Can add log entry                |              35 | add_logentry               |
+| 138 | Can change log entry             |              35 | change_logentry            |
+| 139 | Can delete log entry             |              35 | delete_logentry            |
+| 140 | Can view log entry               |              35 | view_logentry              |
+| 141 | Can add session                  |              36 | add_session                |
+| 142 | Can change session               |              36 | change_session             |
+| 143 | Can delete session               |              36 | delete_session             |
+| 144 | Can view session                 |              36 | view_session               |
+| 145 | Can add site                     |              37 | add_site                   |
+| 146 | Can change site                  |              37 | change_site                |
+| 147 | Can delete site                  |              37 | delete_site                |
+| 148 | Can view site                    |              37 | view_site                  |
+| 149 | Can add Token                    |              38 | add_token                  |
+| 150 | Can change Token                 |              38 | change_token               |
+| 151 | Can delete Token                 |              38 | delete_token               |
+| 152 | Can view Token                   |              38 | view_token                 |
+| 153 | Can add Token                    |              39 | add_tokenproxy             |
+| 154 | Can change Token                 |              39 | change_tokenproxy          |
+| 155 | Can delete Token                 |              39 | delete_tokenproxy          |
+| 156 | Can view Token                   |              39 | view_tokenproxy            |
+| 157 | Can add blacklisted token        |              40 | add_blacklistedtoken       |
+| 158 | Can change blacklisted token     |              40 | change_blacklistedtoken    |
+| 159 | Can delete blacklisted token     |              40 | delete_blacklistedtoken    |
+| 160 | Can view blacklisted token       |              40 | view_blacklistedtoken      |
+| 161 | Can add outstanding token        |              41 | add_outstandingtoken       |
+| 162 | Can change outstanding token     |              41 | change_outstandingtoken    |
+| 163 | Can delete outstanding token     |              41 | delete_outstandingtoken    |
+| 164 | Can view outstanding token       |              41 | view_outstandingtoken      |
+| 165 | Can add uploaded file            |              42 | add_uploadedfile           |
+| 166 | Can change uploaded file         |              42 | change_uploadedfile        |
+| 167 | Can delete uploaded file         |              42 | delete_uploadedfile        |
+| 168 | Can view uploaded file           |              42 | view_uploadedfile          |
+| 169 | Can add file access log          |              43 | add_fileaccesslog          |
+| 170 | Can change file access log       |              43 | change_fileaccesslog       |
+| 171 | Can delete file access log       |              43 | delete_fileaccesslog       |
+| 172 | Can view file access log         |              43 | view_fileaccesslog         |
+| 173 | Can add ocr processing record    |              44 | add_ocrprocessingrecord    |
+| 174 | Can change ocr processing record |              44 | change_ocrprocessingrecord |
+| 175 | Can delete ocr processing record |              44 | delete_ocrprocessingrecord |
+| 176 | Can view ocr processing record   |              44 | view_ocrprocessingrecord   |
++-----+----------------------------------+-----------------+----------------------------+
+
+
+==============================
+TABLE: authentication_otpsession
+==============================
+
+
+==============================
+TABLE: authentication_user
+==============================
+
+
+==============================
+TABLE: authentication_user_groups
+==============================
+
+
+==============================
+TABLE: authentication_user_user_permissions
+==============================
+
+
+==============================
+TABLE: authtoken_token
+==============================
+
+
+==============================
+TABLE: django_admin_log
+==============================
+
+
+==============================
+TABLE: django_content_type
+==============================
++----+-----------------+---------------------+
+| id | app_label       | model               |
++----+-----------------+---------------------+
+| 35 | admin           | logentry            |
+|  6 | alerts          | alert               |
+|  2 | auth            | group               |
+|  1 | auth            | permission          |
+|  5 | authentication  | otpsession          |
+|  4 | authentication  | user                |
+| 38 | authtoken       | token               |
+| 39 | authtoken       | tokenproxy          |
+|  7 | blood_donation  | bloodgroup          |
+|  9 | blood_donation  | bloodrequest        |
+| 10 | blood_donation  | bloodrequestmatch   |
+|  8 | blood_donation  | donorprofile        |
+| 11 | community_feed  | post                |
+| 13 | community_feed  | postcomment         |
+| 12 | community_feed  | postlike            |
+|  3 | contenttypes    | contenttype         |
+| 14 | digital_library | libraryresource     |
+| 15 | digital_library | resourceprogress    |
+| 16 | events_calendar | event               |
+| 17 | events_calendar | eventrsvp           |
+| 43 | file_manager    | fileaccesslog       |
+| 42 | file_manager    | uploadedfile        |
+| 18 | home            | homebanner          |
+| 19 | home            | quickaction         |
+| 20 | local_jobs      | job                 |
+| 21 | local_jobs      | jobapplication      |
+| 24 | local_services  | servicebooking      |
+| 22 | local_services  | servicecategory     |
+| 23 | local_services  | serviceprovider     |
+| 44 | ocr_processing  | ocrprocessingrecord |
+| 25 | onboarding      | onboardingprogress  |
+| 27 | profile         | devicetoken         |
+| 26 | profile         | userprofile         |
+| 28 | report_issues   | issuereport         |
+| 29 | report_issues   | issuestatuslog      |
+| 36 | sessions        | session             |
+| 30 | shell           | shellpreference     |
+| 37 | sites           | site                |
+| 31 | splash          | apprelease          |
+| 32 | startup         | startupprofile      |
+| 40 | token_blacklist | blacklistedtoken    |
+| 41 | token_blacklist | outstandingtoken    |
+| 34 | volunteer_hub   | volunteerenrollment |
+| 33 | volunteer_hub   | volunteerproject    |
++----+-----------------+---------------------+
+
+
+==============================
+TABLE: django_migrations
+==============================
++----+-----------------+------------------------------------------+----------------------------+
+| id | app             | name                                     | applied                    |
++----+-----------------+------------------------------------------+----------------------------+
+|  1 | contenttypes    | 0001_initial                             | 2026-06-06 13:50:32.126614 |
+|  2 | contenttypes    | 0002_remove_content_type_name            | 2026-06-06 13:50:55.365356 |
+|  3 | auth            | 0001_initial                             | 2026-06-06 13:50:55.627614 |
+|  4 | auth            | 0002_alter_permission_name_max_length    | 2026-06-06 13:50:55.682174 |
+|  5 | auth            | 0003_alter_user_email_max_length         | 2026-06-06 13:50:55.687973 |
+|  6 | auth            | 0004_alter_user_username_opts            | 2026-06-06 13:50:55.695984 |
+|  7 | auth            | 0005_alter_user_last_login_null          | 2026-06-06 13:50:55.706984 |
+|  8 | auth            | 0006_require_contenttypes_0002           | 2026-06-06 13:50:55.709988 |
+|  9 | auth            | 0007_alter_validators_add_error_messages | 2026-06-06 13:50:55.716279 |
+| 10 | auth            | 0008_alter_user_username_max_length      | 2026-06-06 13:50:55.722111 |
+| 11 | auth            | 0009_alter_user_last_name_max_length     | 2026-06-06 13:50:55.728571 |
+| 12 | auth            | 0010_alter_group_name_max_length         | 2026-06-06 13:50:55.742635 |
+| 13 | auth            | 0011_update_proxy_permissions            | 2026-06-06 13:50:55.768994 |
+| 14 | auth            | 0012_alter_user_first_name_max_length    | 2026-06-06 13:50:55.774953 |
+| 15 | authentication  | 0001_initial                             | 2026-06-06 13:50:56.458843 |
+| 16 | admin           | 0001_initial                             | 2026-06-06 13:51:03.528035 |
+| 17 | admin           | 0002_logentry_remove_auto_add            | 2026-06-06 13:51:04.787603 |
+| 18 | admin           | 0003_logentry_add_action_flag_choices    | 2026-06-06 13:51:04.797124 |
+| 19 | authtoken       | 0001_initial                             | 2026-06-06 13:51:04.883105 |
+| 20 | authtoken       | 0002_auto_20160226_1747                  | 2026-06-06 13:51:04.910976 |
+| 21 | authtoken       | 0003_tokenproxy                          | 2026-06-06 13:51:04.914993 |
+| 22 | authtoken       | 0004_alter_tokenproxy_options            | 2026-06-06 13:51:04.922063 |
+| 23 | file_manager    | 0001_initial                             | 2026-06-06 13:51:05.260024 |
+| 24 | ocr_processing  | 0001_initial                             | 2026-06-06 13:51:05.394874 |
+| 25 | ocr_processing  | 0002_alter_ocrprocessingrecord_image     | 2026-06-06 13:51:05.399353 |
+| 26 | sessions        | 0001_initial                             | 2026-06-06 13:51:05.434312 |
+| 27 | sites           | 0001_initial                             | 2026-06-06 13:51:05.454513 |
+| 28 | sites           | 0002_alter_domain_unique                 | 2026-06-06 13:51:05.473027 |
+| 29 | token_blacklist | 0001_initial                             | 2026-06-06 13:51:05.636418 |
+| 30 | token_blacklist | 0002_outstandingtoken_jti_hex            | 2026-06-06 13:51:05.692082 |
+| 31 | token_blacklist | 0003_auto_20171017_2007                  | 2026-06-06 13:51:05.730052 |
+| 32 | token_blacklist | 0004_auto_20171017_2013                  | 2026-06-06 13:51:05.797161 |
+| 33 | token_blacklist | 0005_remove_outstandingtoken_jti         | 2026-06-06 13:51:05.851661 |
+| 34 | token_blacklist | 0006_auto_20171017_2113                  | 2026-06-06 13:51:05.877788 |
+| 35 | token_blacklist | 0007_auto_20171017_2214                  | 2026-06-06 13:51:06.062737 |
+| 36 | token_blacklist | 0008_migrate_to_bigautofield             | 2026-06-06 13:51:06.302565 |
+| 37 | token_blacklist | 0010_fix_migrate_to_bigautofield         | 2026-06-06 13:51:06.317452 |
+| 38 | token_blacklist | 0011_linearizes_history                  | 2026-06-06 13:51:06.320499 |
+| 39 | token_blacklist | 0012_alter_outstandingtoken_user         | 2026-06-06 13:51:06.332066 |
++----+-----------------+------------------------------------------+----------------------------+
+
+
+==============================
+TABLE: django_session
+==============================
+
+
+==============================
+TABLE: django_site
+==============================
++----+-------------+-------------+
+| id | domain      | name        |
++----+-------------+-------------+
+|  1 | example.com | example.com |
++----+-------------+-------------+
+
+
+==============================
+TABLE: file_manager_fileaccesslog
+==============================
+
+
+==============================
+TABLE: file_manager_uploadedfile
+==============================
+
+
+==============================
+TABLE: ocr_processing_ocrprocessingrecord
+==============================
+
+
+==============================
+TABLE: token_blacklist_blacklistedtoken
+==============================
+
+
+==============================
+TABLE: token_blacklist_outstandingtoken
+==============================
+
+

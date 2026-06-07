@@ -133,6 +133,7 @@ curl -X POST http://localhost:8000/api/v1/community-feed/posts/ \
 - [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
 - [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
 - [SETUP_GUIDE.md](SETUP_GUIDE.md)
+- [NAMECHEAP_DEPLOYMENT.md](NAMECHEAP_DEPLOYMENT.md)
 
 ## Production Notes
 - Replace all `.env` secret values before deployment

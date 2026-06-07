@@ -1,7 +1,0 @@
-PassengerEnabled On
-PassengerAppType wsgi
-PassengerStartupFile passenger_wsgi.py
-Options -Indexes
-Require all granted
-Order Allow,Deny
-Allow from all

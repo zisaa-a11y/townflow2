@@ -875,9 +875,9 @@ CSRF_TRUSTED_ORIGINS=https://yourdomain.com
 # Database
 MYSQL_HOST=localhost
 MYSQL_PORT=3306
-MYSQL_DATABASE=townflow_db
-MYSQL_USER=townflow_user
-MYSQL_PASSWORD=secure_password
+MYSQL_DATABASE=townetrl_townflow2
+MYSQL_USER=townetrl_townflow2user
+MYSQL_PASSWORD=FHQHG4A3YPHat7y
 MYSQL_ROOT_PASSWORD=root_password
 
 # Redis

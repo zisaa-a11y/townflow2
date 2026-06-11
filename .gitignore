@@ -8,7 +8,7 @@ htmlcov/
 venv/
 env/
 media/
-static/
+/static/
 .env
 .DS_Store
 .idea/

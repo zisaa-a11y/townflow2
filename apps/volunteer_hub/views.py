@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from django.shortcuts import render
 from django.urls import reverse
 from rest_framework import permissions, viewsets
@@ -8,11 +10,31 @@ from apps.volunteer_hub.models import VolunteerEnrollment, VolunteerProject
 from apps.volunteer_hub.serializers import VolunteerEnrollmentSerializer, VolunteerProjectSerializer
 
 
+STATIC_JS_DIR = Path(__file__).resolve().parent / "static" / "volunteer_hub" / "js"
+
+
+def load_form_generator_inline_js():
+    parser_source = (STATIC_JS_DIR / "openapi_parser.js").read_text(encoding="utf-8")
+    generator_source = (STATIC_JS_DIR / "form_generator.js").read_text(encoding="utf-8")
+
+    parser_source = parser_source.replace("export function ", "function ")
+    generator_source = generator_source.replace('import { parseOpenApiPostEndpoints } from "./openapi_parser.js";\n\n', "")
+    generator_source = generator_source.replace(
+        "const scriptTag = document.currentScript;\nconst schemaUrl = scriptTag?.dataset?.schemaUrl || \"/api/schema/\";\n",
+        "const schemaUrl = window.__VOLUNTEER_HUB_SCHEMA_URL || \"/api/schema/\";\n",
+    )
+
+    return "\n\n".join([parser_source, generator_source])
+
+
 def form_generator_page(request):
     return render(
         request,
         "volunteer_hub/form_generator.html",
-        {"schema_url": reverse("schema")},
+        {
+            "schema_url": reverse("schema"),
+            "form_generator_js": load_form_generator_inline_js(),
+        },
     )
 
 
